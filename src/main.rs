@@ -11,10 +11,12 @@ fn lock_generator(args: &[u32]) -> Lock {
 }
 
 fn calculate_rotations(initial_position: i32, final_position: i32) -> u32 {
-    // This is is not correct. Need to fix. (7 -> 2 should be 5, function returns 0)
-    // With mod 5 you can't ever get 5...mod 6 wouldn't work either because at 6 you get 0 and that's not right either (you want 4, I think)
-    // Not sure mod is right here
-    ((initial_position - final_position).abs() % 5) as u32
+    // The thought here is that the sum of direct rotations + rollover rotations will always equal 10.
+    // So, the abs_difference of positions gives us the direct number of rotations and 10 - abs_difference gives the
+    // number of rollover rotations required, and we want the minimum of the two.
+    use std::cmp;
+    let abs_difference: u32 = (initial_position - final_position).abs();
+    cmp::min(abs_difference, 10 - abs_difference)
 }
 
 fn main() {
