@@ -15,8 +15,8 @@ fn calculate_rotations(initial_position: i32, final_position: i32) -> u32 {
     // So, the abs_difference of positions gives us the direct number of rotations and 10 - abs_difference gives the
     // number of rollover rotations required, and we want the minimum of the two.
     use std::cmp;
-    let abs_difference: u32 = (initial_position - final_position).abs();
-    cmp::min(abs_difference, 10 - abs_difference)
+    let abs_difference = (initial_position - final_position).abs();
+    cmp::min(abs_difference, 10 - abs_difference) as u32
 }
 
 fn main() {
