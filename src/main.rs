@@ -1,15 +1,6 @@
 use std::env;
 
 
-struct Lock {
-    state_vector : Vec<u32>,
-}
-
-fn lock_generator(args: &[u32]) -> Lock {
-    let positions = args.to_vec();    
-    Lock { state_vector: positions }
-}
-
 fn calculate_rotations(initial_position: i32, final_position: i32) -> u32 {
     // The thought here is that the sum of direct rotations + rollover rotations will always equal 10.
     // So, the abs_difference of positions gives us the direct number of rotations and 10 - abs_difference gives the
@@ -17,6 +8,15 @@ fn calculate_rotations(initial_position: i32, final_position: i32) -> u32 {
     use std::cmp;
     let abs_difference = (initial_position - final_position).abs();
     cmp::min(abs_difference, 10 - abs_difference) as u32
+}
+
+fn calculate_total_rotations(locked_state: Vec<u32>, unlocked_state: Vec<u32>) -> u32 {
+    let mut sum : u32 = 0;
+    for index in 0..(locked_state.len())
+    {
+        sum += calculate_rotations(locked_state[index] as i32, unlocked_state[index] as i32);
+    }
+    sum
 }
 
 fn main() {
@@ -45,5 +45,7 @@ fn main() {
         unlock_state.push(args[index].parse::<u32>().unwrap());
         //println!("{}", unlock_state[index - size_of_one_lock - 1]);
     }
+
+    println!("{} rotations are required.", calculate_total_rotations(current_lock_state, unlock_state));
 
 }
