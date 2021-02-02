@@ -22,7 +22,7 @@ fn calculate_total_rotations(locked_state: Vec<u32>, unlocked_state: Vec<u32>) -
 fn main() {
 
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
+    //println!("{:?}", args);
 
     let num_input_elems = args.len() - 1;
     if (num_input_elems % 2) != 0 
@@ -46,6 +46,8 @@ fn main() {
         //println!("{}", unlock_state[index - size_of_one_lock - 1]);
     }
 
+    println!("Current Lock: {:?}", current_lock_state);
+    println!("Unlock Values: {:?}", unlock_state);
     println!("{} rotations are required.", calculate_total_rotations(current_lock_state, unlock_state));
 
 }
